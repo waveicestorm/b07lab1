@@ -1,16 +1,27 @@
+import java.io.File;
+import java.io.IOException;
 public class Driver {
-    public static void main(String[] args) {
-        Polynomial p = new Polynomial();
-        System.out.println(p.evaluate(3));
-        double [] c1 = {6,0,0,5};
-        Polynomial p1 = new Polynomial(c1);
-        double [] c2 = {0,-2,0,0,-9};
-        Polynomial p2 = new Polynomial(c2);
-        Polynomial s = p1.add(p2);
-        System.out.println("s(0.1) = " + s.evaluate(0.1));
-        if(s.hasRoot(1))
-            System.out.println("1 is a root of s");
-        else
-            System.out.println("1 is not a root of s");
+    public static void main(String[] args) throws IOException {
+	double[] c1 = new double[] {6,-2,5};
+	int[] e1 = new int[] {0,1,3};
+	double[] c2 = new double[] {-2,3,1,-7};
+	int[] e2 = new int[] {0,1,2,3};
+
+	Polynomial p1 = new Polynomial(c1, e1);
+	Polynomial p2 = new Polynomial(c2, e2);
+
+	Polynomial a12 = p1.add(p2);
+	Polynomial m12 = p1.multiply(p2);
+
+	for (int i = 0; i < a12.coefficients.length; i++) {
+	    System.out.println("Term: " + a12.coefficients[i] + "x" + a12.exponents[i]);
+	}
+	System.out.println();
+	for (int i = 0; i < m12.coefficients.length; i++) {
+	    System.out.println("Term: " + m12.coefficients[i] + "x" + m12.exponents[i]);
+	}
+
+	Polynomial f1 = new Polynomial(new File("./input.txt"));
+	f1.saveToFile("./output.txt");
     }
 }
